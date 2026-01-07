@@ -53,6 +53,20 @@ Note:
 - `gnn-challenge/data/<track>/test.csv` has no labels.
 - Your `target` predictions are evaluated by the organizers.
 
+## How to submit
+
+Send **one CSV per track**.
+
+- Option A (recommended): open a **GitHub Issue** in this repo, attach your CSV file(s), and include:
+	- Team name
+	- Track (`proteins` and/or `mutag`)
+	- Short method description (1-2 lines)
+
+What happens next:
+
+- Organizers validate your file format and compute the official test score.
+- The organizers may update the public leaderboard.
+
 Score visibility:
 
 - Participants can always see their **local validation score** (from `val.csv`).
