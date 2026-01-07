@@ -38,24 +38,7 @@ Submission format:
 
 - CSV columns must be exactly: `graph_id,target`
 
-## For organizers (prepare data)
+Note:
 
-Raw zips should NOT be committed. Put them under `gnn-challenge/raw/`.
-
-Prepare a track (example: PROTEINS):
-
-```bash
-python gnn-challenge/starter_code/prepare_data.py --dataset proteins --raw-zip gnn-challenge/raw/PROTEINS.zip
-```
-
-To create `test_labels.csv` for scoring (organizers only):
-
-```bash
-python gnn-challenge/starter_code/prepare_data.py --dataset proteins --raw-zip gnn-challenge/raw/PROTEINS.zip --write-test-labels
-```
-
-Score a submission (organizers only):
-
-```bash
-python gnn-challenge/starter_code/scoring_script.py gnn-challenge/submissions/sample_submission_proteins.csv proteins
-```
+- `gnn-challenge/data/<track>/test.csv` has no labels.
+- Your `target` predictions are evaluated by the organizers.
