@@ -7,6 +7,16 @@ This folder is the competition package.
 - `proteins` (graph classification)
 - `mutag` (graph classification)
 
+## Timeline
+
+- Start: 2026-01-08
+- Deadline: 2026-07-08 (6 months)
+
+## Submission policy
+
+- Daily limit: **3 submissions per team per track**
+- You can train as much as you want locally; only submissions are limited.
+
 ## For participants (the easy way)
 
 1) Install Python 3.10+.
@@ -42,3 +52,9 @@ Note:
 
 - `gnn-challenge/data/<track>/test.csv` has no labels.
 - Your `target` predictions are evaluated by the organizers.
+
+Score visibility:
+
+- Participants can always see their **local validation score** (from `val.csv`).
+- The **official test score** is computed by the organizers (test labels are private).
+- The organizers may publish a public leaderboard; otherwise you will only have your own local validation score.

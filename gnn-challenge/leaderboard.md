@@ -2,6 +2,11 @@
 
 Maintain separate leaderboards per track.
 
+Rules:
+
+- Deadline: 2026-07-08
+- Daily limit: 3 submissions per team per track
+
 ## Track A: PROTEINS (graph classification)
 
 | Rank | Team | Macro F1 | Notes |
