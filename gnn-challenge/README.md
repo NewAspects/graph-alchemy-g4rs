@@ -2,6 +2,28 @@
 
 This folder is the competition package.
 
+## Overview
+
+Goal: build a model that predicts the **graph class** for unseen graphs.
+
+You are given two tracks (datasets):
+
+- `proteins`: protein graphs (graph classification)
+- `mutag`: molecule graphs (graph classification)
+
+For each track:
+
+- You train on `train.csv` (labeled graphs).
+- You can tune on `val.csv` (labeled graphs).
+- You must predict labels for `test.csv` (unlabeled graphs).
+
+## Scoring
+
+- Metric: **Macro F1** (higher is better)
+- The official score is computed by the organizers on a **hidden test label file**.
+
+This repo lets you compute a local validation score (on `val.csv`) and generate a submission for the test set.
+
 ## Tracks
 
 - `proteins` (graph classification)
