@@ -1,10 +1,10 @@
 ﻿# graph-alchemy-g4rs
 
-Task3 submission workspace.
+This repository hosts a small, standalone **graph classification mini-competition**.
 
-Task 3 lives under `gnn-challenge/`.
+The competition package lives under `gnn-challenge/`.
 
-Implements an "Open GNN Mini-Competition" with **two international-style tracks**:
+It provides **two tracks**:
 
 - `proteins` (protein graphs)
 - `mutag` (molecule graphs)
@@ -18,3 +18,5 @@ Quickstart:
 3) `python gnn-challenge/starter_code/baseline.py --dataset proteins`
 
 This generates `gnn-challenge/submissions/sample_submission_proteins.csv`.
+
+For full participant instructions (including how to submit), see `gnn-challenge/README.md`.

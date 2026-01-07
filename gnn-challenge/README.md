@@ -1,4 +1,4 @@
-# Open GNN Mini-Competition (Task 3)
+# Graph Alchemy Mini-Competition
 
 This folder is the competition package.
 
@@ -57,7 +57,7 @@ Note:
 
 Send **one CSV per track**.
 
-- Option A (recommended): open a **GitHub Issue** in this repo, attach your CSV file(s), and include:
+- Option A (recommended): open a **GitHub Issue** in this repo using the **Submission** template, attach your CSV file(s), and include:
 	- Team name
 	- Track (`proteins` and/or `mutag`)
 	- Short method description (1-2 lines)
