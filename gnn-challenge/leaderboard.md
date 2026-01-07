@@ -2,6 +2,8 @@
 
 Maintain separate leaderboards per track.
 
+Submissions are accepted via GitHub Issues (see `gnn-challenge/README.md`). Organizers update this file manually.
+
 Rules:
 
 - Deadline: 2026-07-08

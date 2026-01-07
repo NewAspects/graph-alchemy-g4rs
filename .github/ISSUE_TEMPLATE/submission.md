@@ -21,6 +21,10 @@ Choose one:
 
 Attach your CSV file to this issue.
 
+How to attach:
+
+- Drag and drop the CSV into the issue comment box, or use the file upload button.
+
 Requirements:
 
 - Filename suggestion: `<team>_<track>.csv`

@@ -48,6 +48,12 @@ Submission format:
 
 - CSV columns must be exactly: `graph_id,target`
 
+Optional (recommended): validate your submission file format locally:
+
+```bash
+python gnn-challenge/starter_code/validate_submission.py gnn-challenge/submissions/sample_submission_proteins.csv --dataset proteins
+```
+
 Note:
 
 - `gnn-challenge/data/<track>/test.csv` has no labels.
@@ -58,9 +64,9 @@ Note:
 Send **one CSV per track**.
 
 - Option A (recommended): open a **GitHub Issue** in this repo using the **Submission** template, attach your CSV file(s), and include:
-	- Team name
-	- Track (`proteins` and/or `mutag`)
-	- Short method description (1-2 lines)
+  - Team name
+  - Track (`proteins` and/or `mutag`)
+  - Short method description (1-2 lines)
 
 What happens next:
 

@@ -5,8 +5,8 @@ If you are a participant, start here: [gnn-challenge/README.md](../README.md)
 ## What is this?
 
 - `baseline.py`: creates a sample submission and prints a validation score
-- `prepare_data.py`: organizers only (turns TU dataset zips into `data/<track>/`)
-- `scoring_script.py`: organizers only (needs hidden `test_labels.csv`)
+- `validate_submission.py`: checks your CSV format (no labels needed)
+- `smoke_test.py`: quick end-to-end check (baseline + validator)
 
 ## Quickstart
 
