@@ -17,6 +17,18 @@ For each track:
 - You can tune on `val.csv` (labeled graphs).
 - You must predict labels for `test.csv` (unlabeled graphs).
 
+## Motivation / Why participate
+
+Graph classification is a core task in applied graph machine learning. In practice, graphs often represent molecules and protein structures, and predicting a graph label is a common first benchmark when building and debugging GNN pipelines.
+
+This mini-competition is designed to be:
+
+- **What it measures:** performance on graph-level classification under a fixed train/val/test split, using the official metric (**Macro F1**).
+- **Why it matters:** a compact, reproducible benchmark to practice end-to-end graph ML (data handling, modeling, evaluation, reporting) without heavyweight infrastructure.
+- **Who it is for:** students and practitioners who want a clean baseline and a well-scoped challenge (beginner-friendly, but open-ended for stronger models).
+- **What you gain:** a ready-to-run reference pipeline, a consistent evaluation protocol, and the habit of reporting runtime/compute alongside accuracy.
+- **What counts as a strong approach:** improving Macro F1 on the hidden test set while keeping a **reproducible workflow** (clear method description, approximate runtime, and no leakage from test labels).
+
 ## Scoring
 
 - Metric: **Macro F1** (higher is better)
