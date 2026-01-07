@@ -1,0 +1,22 @@
+{
+  "zip_path": "C:\\Users\\User\\Desktop\\ben\\yzv\\graph_group\\competition\\gnn-challenge\\raw\\MUTAG.zip",
+  "prefix": "MUTAG",
+  "n_graphs": 188,
+  "n_nodes": 3371,
+  "n_edges": 7442,
+  "raw_label_values": [
+    -1,
+    1
+  ],
+  "label_mapping": {
+    "-1": 0,
+    "1": 1
+  },
+  "has_node_labels": true,
+  "has_node_attributes": false,
+  "split": {
+    "seed": 42,
+    "test_frac": 0.2,
+    "val_frac": 0.2
+  }
+}

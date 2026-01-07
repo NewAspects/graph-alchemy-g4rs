@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Raw dataset archives (do not commit)
+gnn-challenge/raw/*.zip
+*.zip
+
+# Papers / artifacts (not part of the competition release)
+*.pdf
+
+# Organizer-only hidden labels (do not commit)
+gnn-challenge/data/**/test_labels.csv
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+.pytest_cache/
+.DS_Store
