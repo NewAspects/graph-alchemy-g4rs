@@ -38,6 +38,7 @@ This repo lets you compute a local validation score (on `val.csv`) and generate 
 
 - Daily limit: **3 submissions per team per track**
 - You can train as much as you want locally; only submissions are limited.
+- Each submission issue must include **approximate runtime** (how long it took to produce the attached CSV on your hardware).
 
 ## For participants (the easy way)
 
@@ -88,7 +89,8 @@ Send **one CSV per track**.
 - Option A (recommended): open a **GitHub Issue** in this repo using the **Submission** template, attach your CSV file(s), and include:
   - Team name
   - Track (`proteins` and/or `mutag`)
-  - Short method description (1-2 lines)
+  - Short method description (2-5 lines)
+  - Approximate runtime to produce the attached CSV (training + inference; CPU/GPU info is helpful)
 
 What happens next:
 

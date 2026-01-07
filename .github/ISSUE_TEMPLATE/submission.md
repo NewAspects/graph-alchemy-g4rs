@@ -35,6 +35,7 @@ Requirements:
 
 1-2 lines describing your approach.
 
-## Notes (optional)
+## Runtime (required)
 
-Anything else we should know (runtime, libraries, etc.).
+Approximate runtime to produce the attached CSV (training + inference)
+Hardware used (CPU/GPU + model name if relevant)
