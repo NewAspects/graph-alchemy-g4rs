@@ -6,19 +6,28 @@ Motivation: graph classification is a foundational task in graph ML, commonly us
 
 The competition package lives under `gnn-challenge/`.
 
-It provides **two tracks**:
+It uses a **combined evaluation axis** over two datasets:
 
 - `proteins` (protein graphs)
 - `mutag` (molecule graphs)
 
-Each track is graph classification and is stored under `gnn-challenge/data/<dataset>/`.
+Each dataset is graph classification and is stored under `gnn-challenge/data/<dataset>/`.
+Leaderboard score is computed as:
+
+- `Combined Score = (MacroF1_proteins + MacroF1_mutag) / 2`
+
+One official submission attempt contains both prediction files (proteins + mutag) in a single run folder.
 
 Quickstart:
 
 1) Create/activate venv
 2) `pip install -r gnn-challenge/starter_code/requirements.txt`
 3) `python gnn-challenge/starter_code/baseline.py --dataset proteins`
+4) `python gnn-challenge/starter_code/baseline.py --dataset mutag`
 
-This generates `gnn-challenge/submissions/sample_submission_proteins.csv`.
+This generates:
+
+- `gnn-challenge/submissions/sample_submission_proteins.csv`
+- `gnn-challenge/submissions/sample_submission_mutag.csv`
 
 For full participant instructions (including how to submit), see `gnn-challenge/README.md`.

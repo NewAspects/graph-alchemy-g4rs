@@ -22,7 +22,7 @@ def validate_submission(pred_path: Path, dataset: str, test_path: Path) -> None:
     test = pd.read_csv(test_path)
 
     if set(preds.columns) != REQUIRED_COLUMNS:
-        raise ValueError(f"predictions.csv must contain exactly {sorted(REQUIRED_COLUMNS)}")
+        raise ValueError(f"Prediction file must contain exactly {sorted(REQUIRED_COLUMNS)}")
 
     if preds["graph_id"].duplicated().any():
         raise ValueError("Duplicate graph_id values found")

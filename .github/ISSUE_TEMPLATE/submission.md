@@ -1,7 +1,7 @@
 ---
 name: Submission
 about: Submission guidance (PR-based flow)
-title: "[Submission Help] <team name> - <track>"
+title: "[Submission Help] <team name>"
 labels: [submission]
 ---
 
@@ -17,7 +17,7 @@ Please create:
 
 Then open a PR to `main`.
 
-## predictions.csv format
+## Prediction files format
 
 - Columns must be exactly: `graph_id,target`
 - `graph_id` must match `gnn-challenge/data/proteins/test.csv` for proteins file
