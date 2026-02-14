@@ -77,7 +77,7 @@ pip install -r gnn-challenge/starter_code/requirements.txt
 python gnn-challenge/starter_code/baseline.py --dataset proteins
 ```
 
-For MUTAG:
+Then run it again for MUTAG (the script handles one dataset per run):
 
 ```bash
 python gnn-challenge/starter_code/baseline.py --dataset mutag

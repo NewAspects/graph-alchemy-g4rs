@@ -25,6 +25,8 @@ Quickstart:
 3) `python gnn-challenge/starter_code/baseline.py --dataset proteins`
 4) `python gnn-challenge/starter_code/baseline.py --dataset mutag`
 
+Note: each command runs a single dataset; run both commands to produce the full combined submission inputs.
+
 This generates:
 
 - `gnn-challenge/submissions/sample_submission_proteins.csv`
