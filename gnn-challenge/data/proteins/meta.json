@@ -1,5 +1,5 @@
 {
-  "zip_path": "C:\\Users\\User\\Desktop\\ben\\yzv\\graph_group\\competition\\PROTEINS.zip",
+  "zip_path": "C:\\Users\\User\\Desktop\\ben\\yzv\\graph_group\\competition\\gnn-challenge\\raw\\PROTEINS.zip",
   "prefix": "PROTEINS",
   "n_graphs": 1113,
   "n_nodes": 43471,
@@ -15,7 +15,7 @@
   "has_node_labels": true,
   "has_node_attributes": true,
   "split": {
-    "seed": 42,
+    "seed": 2026,
     "test_frac": 0.2,
     "val_frac": 0.2
   }

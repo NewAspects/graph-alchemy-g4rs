@@ -1,41 +1,36 @@
 ---
 name: Submission
-about: Submit your predictions for evaluation
-title: "[Submission] <team name> - <track>"
+about: Submission guidance (PR-based flow)
+title: "[Submission Help] <team name> - <track>"
 labels: [submission]
 ---
 
-## Team
+## PR-based submission required
 
-- Team name:
-- Contact (optional):
+Submissions are validated/scored automatically from Pull Requests.
 
-## Track
+Please create:
 
-Choose one:
+- `gnn-challenge/submissions/inbox/<team_name>/<run_id>/predictions_proteins.csv`
+- `gnn-challenge/submissions/inbox/<team_name>/<run_id>/predictions_mutag.csv`
+- `gnn-challenge/submissions/inbox/<team_name>/<run_id>/metadata.json`
 
-- [ ] proteins
-- [ ] mutag
+Then open a PR to `main`.
 
-## File
+## predictions.csv format
 
-Attach your CSV file to this issue.
+- Columns must be exactly: `graph_id,target`
+- `graph_id` must match `gnn-challenge/data/proteins/test.csv` for proteins file
+- `graph_id` must match `gnn-challenge/data/mutag/test.csv` for mutag file
 
-How to attach:
+## metadata.json required fields
 
-- Drag and drop the CSV into the issue comment box, or use the file upload button.
+- `team`
+- `model`
+- `model_type` (`human`, `llm-only`, `human+llm`)
+- `runtime_minutes`
+- `notes` (optional)
 
-Requirements:
+## Need help?
 
-- Filename suggestion: `<team>_<track>.csv`
-- CSV columns must be exactly: `graph_id,target`
-- `graph_id` must match `gnn-challenge/data/<track>/test.csv`
-
-## Method (short)
-
-1-2 lines describing your approach.
-
-## Runtime (required)
-
-Approximate runtime to produce the attached CSV (training + inference)
-Hardware used (CPU/GPU + model name if relevant)
+Use this issue template only for questions/support about a submission.

@@ -15,7 +15,7 @@
   "has_node_labels": true,
   "has_node_attributes": false,
   "split": {
-    "seed": 42,
+    "seed": 2026,
     "test_frac": 0.2,
     "val_frac": 0.2
   }

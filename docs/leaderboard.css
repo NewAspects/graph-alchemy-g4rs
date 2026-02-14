@@ -1,0 +1,50 @@
+body {
+    font-family: Segoe UI, Arial, sans-serif;
+    background: #0b1020;
+    color: #e8ecff;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+h1 {
+    margin-bottom: 16px;
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+input,
+select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #2e3d78;
+    background: #111936;
+    color: #e8ecff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #121a38;
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #24315f;
+    text-align: left;
+}
+
+th {
+    cursor: pointer;
+    background: #1a2550;
+}

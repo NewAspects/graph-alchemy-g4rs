@@ -1,0 +1,5 @@
+task: graph_classification
+metric: macro_f1
+datasets:
+  - proteins
+  - mutag

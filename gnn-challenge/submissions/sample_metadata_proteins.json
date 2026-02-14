@@ -1,0 +1,8 @@
+{
+    "team": "baseline_team",
+    "dataset": "proteins",
+    "model": "random-forest-baseline",
+    "model_type": "human",
+    "runtime_minutes": 1,
+    "notes": "starter baseline"
+}

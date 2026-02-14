@@ -17,13 +17,22 @@ For each track:
 - You can tune on `val.csv` (labeled graphs).
 - You must predict labels for `test.csv` (unlabeled graphs).
 
+## Data specification (mandatory A and X)
+
+Each graph is represented by:
+
+- **Adjacency matrix A**: provided in edge-list form in `edges.csv` (`graph_id,src,dst`).
+- **Node feature matrix X**: provided in `nodes.csv` (all node feature columns per `graph_id,node_id`).
+
+This explicitly satisfies the benchmark requirement to provide both A and X.
+
 ## Motivation / Why participate
 
 Graph classification is a core task in applied graph machine learning. In practice, graphs often represent molecules and protein structures, and predicting a graph label is a common first benchmark when building and debugging GNN pipelines.
 
 This mini-competition is designed to be:
 
-- **What it measures:** performance on graph-level classification under a fixed train/val/test split, using the official metric (**Macro F1**).
+- **What it measures:** cross-dataset graph-level classification under fixed train/val/test splits, using a **combined score**.
 - **Why it matters:** a compact, reproducible benchmark to practice end-to-end graph ML (data handling, modeling, evaluation, reporting) without heavyweight infrastructure.
 - **Who it is for:** students and practitioners who want a clean baseline and a well-scoped challenge (beginner-friendly, but open-ended for stronger models).
 - **What you gain:** a ready-to-run reference pipeline, a consistent evaluation protocol, and the habit of reporting runtime/compute alongside accuracy.
@@ -31,10 +40,11 @@ This mini-competition is designed to be:
 
 ## Scoring
 
-- Metric: **Macro F1** (higher is better)
-- The official score is computed by the organizers on a **hidden test label file**.
+- Per-track metric: **Macro F1** (higher is better)
+- Official leaderboard metric: **Combined Score = (MacroF1_proteins + MacroF1_mutag) / 2**
+- Official scoring uses hidden test labels (organizer-only; loaded from CI secrets).
 
-This repo lets you compute a local validation score (on `val.csv`) and generate a submission for the test set.
+This repo lets you compute local validation scores and generate predictions for both test tracks.
 
 ## Tracks
 
@@ -48,9 +58,8 @@ This repo lets you compute a local validation score (on `val.csv`) and generate 
 
 ## Submission policy
 
-- Daily limit: **3 submissions per team per track**
-- You can train as much as you want locally; only submissions are limited.
-- Each submission issue must include **approximate runtime** (how long it took to produce the attached CSV on your hardware).
+- **Only one submission attempt per participant/team** is allowed (strictly enforced by CI).
+- Each submission must include **approximate runtime** (how long it took to produce the CSV on your hardware).
 
 ## For participants (the easy way)
 
@@ -74,7 +83,7 @@ For MUTAG:
 python gnn-challenge/starter_code/baseline.py --dataset mutag
 ```
 
-4) Your submission file will be created here:
+4) Baseline predictions will be created here:
 
 - `gnn-challenge/submissions/sample_submission_proteins.csv`
 - `gnn-challenge/submissions/sample_submission_mutag.csv`
@@ -94,23 +103,67 @@ Note:
 - `gnn-challenge/data/<track>/test.csv` has no labels.
 - Your `target` predictions are evaluated by the organizers.
 
-## How to submit
+## How to submit (PR + automatic scoring)
 
-Send **one CSV per track**.
+Create one run folder per submission:
 
-- Option A (recommended): open a **GitHub Issue** in this repo using the **Submission** template, attach your CSV file(s), and include:
-  - Team name
-  - Track (`proteins` and/or `mutag`)
-  - Short method description (2-5 lines)
-  - Approximate runtime to produce the attached CSV (training + inference; CPU/GPU info is helpful)
+`gnn-challenge/submissions/inbox/<team_name>/<run_id>/`
+
+Required files:
+
+- `predictions_proteins.csv` (columns exactly `graph_id,target`)
+- `predictions_mutag.csv` (columns exactly `graph_id,target`)
+- `metadata.json`
+
+Minimal `metadata.json` fields:
+
+- `team`
+- `model`
+- `model_type` (`human`, `llm-only`, `human+llm`)
+- `runtime_minutes`
+- `notes` (optional)
+
+Then open a Pull Request.
 
 What happens next:
 
-- Organizers validate your file format and compute the official test score.
-- The organizers may update the public leaderboard.
+- CI validates your file format.
+- CI scores predictions against hidden labels (not committed to the repo).
+- CI posts score as a PR comment.
+- After merge, leaderboard files are auto-updated.
+
+## Privacy and fairness policy
+
+- Public leaderboard shows only **rank, combined score**.
+- Private submission artifacts/details are not exposed publicly.
+- Ranking follows Kaggle tie handling: equal scores share the same rank.
+- LLMs may be used by participants for modeling assistance, but must not be used to fully design dataset/task/evaluation logic.
+
+## Dataset challenge realism
+
+Current data intentionally includes realistic difficulty:
+
+- Label imbalance (`proteins` and `mutag` are not class-balanced).
+- Graph sparsity / variable graph structure.
+- Non-trivial feature-topology interactions.
+
+## Computational affordability
+
+Competition baseline and expected training workflows are designed to stay within the benchmark budget (target: full training under 3 hours on CPU).
+
+## Interactive leaderboard (GitHub Pages)
+
+Interactive UI files live under `docs/`:
+
+- `docs/leaderboard.html`
+- `docs/leaderboard.css`
+- `docs/leaderboard.js`
+
+Enable GitHub Pages with source `main` branch and `/docs` folder.
+The canonical score source is `gnn-challenge/leaderboard/leaderboard.csv`.
 
 Score visibility:
 
 - Participants can always see their **local validation score** (from `val.csv`).
-- The **official test score** is computed by the organizers (test labels are private).
-- The organizers may publish a public leaderboard; otherwise you will only have your own local validation score.
+- The **official test score** is computed by CI using private labels (kept in GitHub Secrets).
+- Public rankings are generated from `gnn-challenge/leaderboard/leaderboard.csv` and rendered automatically.

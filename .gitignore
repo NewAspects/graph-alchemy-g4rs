@@ -16,3 +16,15 @@ gnn-challenge/data/**/test_labels.csv
 .ipynb_checkpoints/
 .pytest_cache/
 .DS_Store
+__MACOSX/
+._*
+
+# Local document extraction artifacts
+pdf_extracts/
+extract_pdfs.py
+
+# Local workflow secrets (never commit)
+secrets/
+
+# Local PR draft artifacts (never commit)
+local_pr_draft/

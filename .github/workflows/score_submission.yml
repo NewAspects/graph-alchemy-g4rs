@@ -1,0 +1,119 @@
+name: Score Submission PR
+
+on:
+  pull_request:
+    paths:
+      - "gnn-challenge/submissions/inbox/**/predictions_proteins.csv"
+      - "gnn-challenge/submissions/inbox/**/predictions_mutag.csv"
+      - "gnn-challenge/submissions/inbox/**/metadata.json"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r gnn-challenge/starter_code/requirements.txt
+
+      - name: Restore private labels from secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .ci/private_labels
+          printf "%s" "${{ secrets.PROTEINS_TEST_LABELS_CSV }}" > .ci/private_labels/proteins_test_labels.csv
+          printf "%s" "${{ secrets.MUTAG_TEST_LABELS_CSV }}" > .ci/private_labels/mutag_test_labels.csv
+
+      - name: Find changed submission files
+        id: files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
+          echo "$CHANGED"
+          RUNS=$(echo "$CHANGED" | grep -E '^gnn-challenge/submissions/inbox/.+/.+/(predictions_proteins\.csv|predictions_mutag\.csv|metadata\.json)$' | sed -E 's#/(predictions_proteins\.csv|predictions_mutag\.csv|metadata\.json)$##' | sort -u || true)
+          RUN_COUNT=$(echo "$RUNS" | sed '/^$/d' | wc -l | tr -d ' ')
+          if [ "$RUN_COUNT" -ne 1 ]; then
+            echo "PR must modify exactly one submission run folder. Found: $RUN_COUNT" >&2
+            exit 1
+          fi
+          RUN_DIR=$(echo "$RUNS" | head -n1)
+          if [ -z "$RUN_DIR" ]; then
+            echo "No valid submission run folder found" >&2
+            exit 1
+          fi
+          META="$RUN_DIR/metadata.json"
+          PRED_P="$RUN_DIR/predictions_proteins.csv"
+          PRED_M="$RUN_DIR/predictions_mutag.csv"
+          if [ ! -f "$META" ]; then
+            echo "Missing metadata.json next to predictions.csv: $META" >&2
+            exit 1
+          fi
+          if [ ! -f "$PRED_P" ] || [ ! -f "$PRED_M" ]; then
+            echo "Missing required prediction files: predictions_proteins.csv and/or predictions_mutag.csv" >&2
+            exit 1
+          fi
+
+          TEAM=$(python -c "import json,sys; print(str(json.load(open(sys.argv[1], encoding='utf-8')).get('team','')).strip())" "$META")
+          if [ -z "$TEAM" ]; then
+            echo "metadata.team is required" >&2
+            exit 1
+          fi
+
+          EXISTING=$(git ls-tree -r --name-only "origin/${{ github.base_ref }}" "gnn-challenge/submissions/inbox/$TEAM" | grep -E 'metadata\.json$' || true)
+          if [ -n "$EXISTING" ]; then
+            echo "Submission policy violation: only one attempt per participant is allowed. Team '$TEAM' already submitted." >&2
+            exit 1
+          fi
+
+          TEAM_DIR=$(basename "$(dirname "$RUN_DIR")")
+          if [ "$TEAM" != "$TEAM_DIR" ]; then
+            echo "metadata.team must match the team folder name. metadata.team=$TEAM folder=$TEAM_DIR" >&2
+            exit 1
+          fi
+
+          echo "run_dir=$RUN_DIR" >> "$GITHUB_OUTPUT"
+          echo "meta=$META" >> "$GITHUB_OUTPUT"
+
+      - name: Validate + score
+        id: score
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESULT=$(python gnn-challenge/competition/score_submission.py \
+            --run-dir "${{ steps.files.outputs.run_dir }}" \
+            --metadata "${{ steps.files.outputs.meta }}" \
+            --labels-dir .ci/private_labels \
+            --pr-number "${{ github.event.pull_request.number }}")
+          echo "json=$RESULT" >> "$GITHUB_OUTPUT"
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const result = JSON.parse(`${{ steps.score.outputs.json }}`);
+            const body = [
+              `✅ Submission is valid and scored.`,
+              ``,
+              `- Proteins Macro F1: **${Number(result.proteins_score).toFixed(6)}**`,
+              `- Mutag Macro F1: **${Number(result.mutag_score).toFixed(6)}**`,
+              `- Combined Score: **${Number(result.score).toFixed(6)}**`,
+              `- Public leaderboard displays rank and score only.`
+            ].join("\n");
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });

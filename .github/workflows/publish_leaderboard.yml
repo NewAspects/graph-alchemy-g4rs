@@ -1,0 +1,59 @@
+name: Publish Leaderboard
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "gnn-challenge/submissions/inbox/**"
+      - "gnn-challenge/competition/**"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r gnn-challenge/starter_code/requirements.txt
+
+      - name: Restore private labels from secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .ci/private_labels
+          printf "%s" "${{ secrets.PROTEINS_TEST_LABELS_CSV }}" > .ci/private_labels/proteins_test_labels.csv
+          printf "%s" "${{ secrets.MUTAG_TEST_LABELS_CSV }}" > .ci/private_labels/mutag_test_labels.csv
+
+      - name: Validate one-attempt policy
+        run: |
+          python gnn-challenge/competition/validate_repository_policy.py
+
+      - name: Rebuild leaderboard CSV
+        run: |
+          python gnn-challenge/competition/rebuild_leaderboard.py --labels-dir .ci/private_labels
+
+      - name: Render leaderboard markdown
+        run: |
+          python gnn-challenge/competition/render_leaderboard.py
+
+      - name: Commit leaderboard artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "No leaderboard changes."
+            exit 0
+          fi
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add gnn-challenge/leaderboard/leaderboard.csv gnn-challenge/leaderboard/leaderboard.md gnn-challenge/leaderboard.md docs/leaderboard.json
+          git commit -m "Update leaderboard artifacts"
+          git push
